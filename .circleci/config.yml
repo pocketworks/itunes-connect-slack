@@ -6,8 +6,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-          - app-db-cache
+          keys:
+            - app-db-cache
       - run:
           name: "Update Node.js and npm"
           command: |
@@ -28,10 +28,10 @@ workflows:
   check_ios_apps_status:
     triggers:
       - schedule:
-        cron: "0 * * * *"
-        filters:
-          branches:
-            only:
-              - master
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - check_for_updates
