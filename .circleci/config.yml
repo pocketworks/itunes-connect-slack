@@ -1,0 +1,33 @@
+version: 2.0
+jobs:
+  check_for_updates:
+    docker:
+      - image: circleci/ruby:2.4.2-jessie-node
+    steps:
+      - checkout
+      - restore_cache:
+        keys:
+          - app-db-cache
+      - run:
+          name: "Update Node.js and npm"
+          command: |
+            curl -sSL "https://nodejs.org/dist/v11.10.0/node-v11.10.0-linux-x64.tar.xz" | sudo tar --strip-components=2 -xJ -C /usr/local/bin/ node-v11.10.0-linux-x64/bin/node
+            curl https://www.npmjs.com/install.sh | sudo bash
+      - run:
+          name: Check current version of node
+          command: node -v
+      - run:
+          name: Poll itc changes
+          command: node poll-itc.js
+      - save_cache:
+          key: app-db-cache
+          paths:
+            - ~/kvstore.db
+workflows:
+  version: 2
+  check_ios_apps_status:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+    jobs:
+      - check_for_updates
