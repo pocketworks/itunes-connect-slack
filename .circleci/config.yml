@@ -7,10 +7,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - app-db-cache
-      - run:
-          name: Copy cache to project dir
-          command: cp /home/circleci/kvstore.db /home/circleci/project/kvstore.db
+            - v1-app-db-cache
       - run:
           name: "Update Node.js and npm"
           command: |
@@ -26,7 +23,13 @@ jobs:
             npm install @slack/client@3.16.0 --save
             npm install dirty --save
             npm install moment --save
-
+      - run:
+          name: Poll itc changes
+          command: node poll-itc.js
+      - save_cache:
+          key: v1-app-db-cache
+          paths:
+            - /home/circleci/project/kvstore.db
 workflows:
   version: 2
   build_on_push:
