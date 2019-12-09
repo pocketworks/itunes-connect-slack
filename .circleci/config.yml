@@ -30,8 +30,8 @@ workflows:
       - schedule:
         cron: "0 * * * *"
         filters:
-            branches:
-              only:
-                - master
+          branches:
+            only:
+              - master
     jobs:
       - check_for_updates
