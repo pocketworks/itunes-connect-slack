@@ -17,6 +17,13 @@ jobs:
           name: Check current version of node
           command: node -v
       - run:
+          name: Install dependencies
+          command: |
+            sudo gem install fastlane
+            npm install @slack/client@3.16.0 --save
+            npm install dirty --save
+            npm install moment --save
+      - run:
           name: Poll itc changes
           command: node poll-itc.js
       - save_cache:
