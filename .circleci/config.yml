@@ -28,6 +28,10 @@ workflows:
   check_ios_apps_status:
     triggers:
       - schedule:
-          cron: "0 * * * *"
+        cron: "0 * * * *"
+        filters:
+            branches:
+              only:
+                - master
     jobs:
       - check_for_updates
