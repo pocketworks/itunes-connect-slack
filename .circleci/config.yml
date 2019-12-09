@@ -25,6 +25,9 @@ jobs:
             - ~/kvstore.db
 workflows:
   version: 2
+  build_on_push:
+    jobs:
+      - check_for_updates
   check_ios_apps_status:
     triggers:
       - schedule:
